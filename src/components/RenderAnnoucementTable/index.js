@@ -73,9 +73,9 @@ export const RenderAnnoucementTable = ({ send, step: { announce: { value = 80, c
         <Label name="count" value={'diamonds'} currentValue={localColor} setValue={setColor}><Suit color="red">♦️</Suit></Label>
         <Label name="count" value={'spades'} currentValue={localColor} setValue={setColor}><Suit color="black">♠️</Suit></Label>
     </div>
-    <div>
-      {player && `Annonce de ${player}`}
-      <Button onClick={passer}>PASSER</Button>
+    <div style={{paddingTop: 8}}>
+      <div>{player && `Annonce de ${player}`}</div>
+      <Button yellow onClick={passer}>PASSER</Button>
     </div>
     </div>
   </Box >;

@@ -19,6 +19,6 @@ export const WatchScores = ({ step, send }) => {
       EW : <DisplayScores scores={step.scores.EW} />
       <DisplayScoresStack cards={step.stacks.EW} />
     </div>
-    <Button onClick={valideScore} >Validate Score</Button>
+    <Button yellow onClick={valideScore} >Validate Score</Button>
   </div>;
 };
