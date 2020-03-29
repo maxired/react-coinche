@@ -1,14 +1,19 @@
 import React, { useEffect, useCallback, useRef } from 'react';
 import Server from '../server';
 import { qs } from '../App';
+import { Button } from './Button';
+import { Box } from './Box';
+
 export const RenderConnection = ({ serverInfo, setServerInfo }) => {
   const inputRef = useRef();
   const startServer = useCallback((d) => {
     Server(null, (error, _serverInfo) => setServerInfo(_serverInfo));
   }, [setServerInfo]);
+
   const onSubmitConnect = useCallback(() => {
     setServerInfo({ shortId: inputRef.current.value });
   }, [setServerInfo]);
+
   useEffect(() => {
     if (qs.setServerId) {
       Server(qs.setServerId, (error, _serverInfo) => setServerInfo(_serverInfo));
@@ -22,13 +27,13 @@ export const RenderConnection = ({ serverInfo, setServerInfo }) => {
     return <div style={{position: 'absolute', top: 10, left: 10, zIndex: 3}}>serverInfo ID {serverInfo.shortId}</div>;
   }
 
-  return (<div>
-    <div><button onClick={startServer}>Start New Server</button></div>
+  return (<Box>
+    <div><Button style={{minWidth: 150, fontSize: 24, backgroundColor: 'rgba(255, 255,255, .2)'}} onClick={startServer}>Start New Server</Button></div>
     <div>or</div>
     <div>
       <div>Connect to existing Server</div>
-      <div><input type="text" placeholder="enter server id" ref={inputRef} /></div>
-      <div><input type="submit" onClick={onSubmitConnect} /></div>
+      <div><input style={{fontSize: 24}} type="text" placeholder="enter server id" ref={inputRef} /></div>
+      <div><Button onClick={onSubmitConnect} style={{minWidth: 150, fontSize: 24, backgroundColor: 'rgba(255, 255,255, .2)'}}>Connect</Button></div>
     </div>
-  </div>);
+  </Box>);
 };

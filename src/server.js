@@ -214,16 +214,13 @@ const setAskPartnerIfNeeded = (res) => {
 const Server = (id, cb) => {
     const randomId = id || Math.floor(Math.random() * 10000)
     const peerServerId = getServerFullId(randomId)
-    const serverPeer = new Peer(peerServerId);
+    const serverPeer = new Peer(peerServerId, { host: '9000-b5d669d5-042e-43c4-863d-e6a3f7621f2f.ws-eu01.gitpod.io', path: '/', secure: true} );
     
     serverPeer.on(ON_OPEN, function(id) {
-        cb(null, { shortId : randomId, fullId: peerServerId })
-
-        serverPeer.on(ON_CONNECTION, (p1_) => {
-          clients[p1_.peer] = { connection: p1_ }
-          p1_.on(ON_DATA, (clientData) => dealWithClientData(p1_, clientData))
-        })
-    
+      serverPeer.on(ON_CONNECTION, (p1_) => {
+        clients[p1_.peer] = { connection: p1_ }
+        p1_.on(ON_DATA, (clientData) => dealWithClientData(p1_, clientData))
+      })
 
     setInterval(() => {
         // refresh client every 3 seconds
@@ -234,6 +231,8 @@ const Server = (id, cb) => {
             })
         })
     }, 3000)
+
+    setTimeout(() => cb(null, { shortId : randomId, fullId: peerServerId }), 300)
    })
 }
 

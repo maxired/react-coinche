@@ -1,2 +1,5 @@
 import React from 'react';
-export const Waiting = () => <div>Waiting for other player</div>;
+
+import { Box } from './Box';
+
+export const Waiting = () => <Box>Waiting for other player</Box>;

@@ -1,6 +1,10 @@
 import React from 'react';
 export const RenderConnected = ({ connected = [] }) => {
+
   if (connected.length !== 4) {
+    if(connected.length === 0){
+      return <div>Not Connected</div>;
+    }
     if (connected.length < 4) {
       return <div>Waiting {4 - connected.length} more people </div>;
     }
