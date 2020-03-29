@@ -1,24 +1,77 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, { useEffect, useState, useCallback } from 'react';
+import Peer from 'peerjs';
 import './App.css';
+import { getServerFullId } from './server'
+//const peer1 = new Peer(`@maxired/belote:${+new Date()}:${Math.floor(Math.random()*10000))}`); 
+import {
+  ON_OPEN, ON_DATA,
+  GET_CLIENT, SET_CLIENT,
+  SET_STEP, CLEAR_CARDS, ADD_CARDS} from './Constants';
+import { RenderMat } from './components/RenderMat';
+import { RenderConnection } from './components/RenderConnection';
+import { RenderConnected } from './components/RenderConnected';
+import { RenderStep } from './components/RenderStep';
+
+
+export const qs = document.location.search ? document.location.search.slice(1).split('&').reduce((memo, v) => {
+  const [name, value] = v.split('=')
+  memo[name] = value || true;
+  return memo
+  }, {}) : {}
+
 
 function App() {
+  const [serverInfo, setServerInfo] = useState({})
+  const [clientCon, setClientCon] = useState(null)
+  const [connected, setConnected] = useState([])
+  const [currentStep, setStep] = useState({})
+  const [cards, setCards] = useState([])
+ 
+  useEffect(() => {
+    if(serverInfo.shortId){
+      const client = new Peer(); 
+      client.on(ON_OPEN, function() {
+        const con = client.connect(getServerFullId(serverInfo.shortId));
+        con.on(ON_OPEN, () => {
+            setClientCon(con)
+        });
+      })
+    }
+  }, [serverInfo])
+
+
+  useEffect(() => {
+    if(!clientCon) return
+    clientCon.send({ type: GET_CLIENT})
+    clientCon.on(ON_DATA, ({ type, payload }) => {
+      if(type === SET_CLIENT){
+        setConnected(payload)
+      }
+
+      if(type === SET_STEP){
+        setStep(payload)
+      }
+
+      if(type === CLEAR_CARDS){
+        setCards([])
+      }
+
+      if(type === ADD_CARDS){
+        setCards(currentCards => [...currentCards, ...payload.cards])
+      }
+    });
+  }, [clientCon])
+
+  const send = useCallback((...params) => {
+    clientCon.send(...params)
+  }, [clientCon])
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <RenderConnection serverInfo={serverInfo} setServerInfo={setServerInfo} />
+      <RenderMat step={currentStep}  send={send} />
+      <RenderStep step={currentStep} send={send} cards={cards} setCards={setCards} />
+      <RenderConnected connected={connected} />   
     </div>
   );
 }

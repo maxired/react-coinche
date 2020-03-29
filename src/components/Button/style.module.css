@@ -1,0 +1,10 @@
+.button {
+    height: 64px;
+    background-color: aquamarine;
+    border-radius: 16px;
+    border-color: aqua;
+    border-width: 2px;
+    border-style: solid;
+    cursor: pointer;
+}
+

@@ -1,0 +1,49 @@
+.table {
+    display: flex;
+    justify-content: center;
+    max-height: 66vh;
+}
+
+.section {
+    padding: 10px;
+}
+
+.labelLine {
+    display: flex;
+}
+
+.label {
+    display: inline-block;
+    height: 100px;
+    width:100px;
+    max-height: 19vh;
+    max-Width: 19vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: aquamarine;
+    border: 2px solid aqua;
+    border-radius: 16px;
+    margin: 2px;
+    cursor: pointer;
+}
+
+.label.checked {
+    border: 2px solid blue;
+}
+
+.label input[type=radio]{
+    display: none;
+}
+
+.suit {
+    font-size: 42px;
+}
+
+.suit.black {
+    color: black;
+}
+
+.suit.red {
+    color: red;
+}
