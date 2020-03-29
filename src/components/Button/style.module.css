@@ -8,3 +8,16 @@
     cursor: pointer;
 }
 
+.yellow {
+    min-width: 150px;
+    font-size: 24px;
+    background-color: transparent;
+    border-color: #E9FD9A;
+    color: #E9FD9A;
+    padding: 8px;
+}
+
+
+.yellow:hover {
+    background-color: rgba(255, 255, 255, .1);
+}

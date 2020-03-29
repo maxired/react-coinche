@@ -21,15 +21,21 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: aquamarine;
-    border: 2px solid aqua;
+    border: 2px solid #E9FD9A;
+    background-color: transparent;
+    color: #E9FD9A;
     border-radius: 16px;
     margin: 2px;
     cursor: pointer;
 }
 
+.label:hover {
+    background-color: rgba(255, 255,255, .1);
+}
+
 .label.checked {
-    border: 2px solid blue;
+    border: 2px solid #E9FD9A;
+    background-color: rgb(233, 253, 154, .2)
 }
 
 .label input[type=radio]{

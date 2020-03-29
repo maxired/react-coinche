@@ -2,6 +2,7 @@ import React, { useState, useCallback, useEffect } from 'react';
 import styles from './styles.module.css'
 import { CLIENT_ANNOUNCE, CLIENT_VALIDATE_ANNOUNCE } from '../../Constants';
 import { Button } from '../Button';
+import { Box } from '../Box';
 
 const Label = ({ value, setValue, currentValue, children }) => {
   const onChange = useCallback((event) => setValue(value), [setValue, value])
@@ -46,7 +47,7 @@ export const RenderAnnoucementTable = ({ send, step: { announce: { value = 80, c
   const passer = useCallback(() => {
     send({ type: CLIENT_VALIDATE_ANNOUNCE })
   }, [send])
-  return <div className={styles.table}>
+  return <Box className={styles.table}>
       <div  className={styles.section}>
       <div className={styles.labelLine}>
      <Label name="count" value={80} currentValue={localCount} setValue={setCount} />
@@ -77,7 +78,7 @@ export const RenderAnnoucementTable = ({ send, step: { announce: { value = 80, c
       <Button onClick={passer}>PASSER</Button>
     </div>
     </div>
-  </div >;
+  </Box >;
 };
 
 const Suit = ({ children , color }) => <div className={`${styles.suit} ${styles[color]}`}>{children}</div>

@@ -7,6 +7,7 @@ import { AskName } from './AskName';
 import { WatchScores } from './WatchScores';
 import { Waiting } from './Waiting';
 export const RenderStep = ({ step = {}, send, cards, setCards }) => {
+    return  <RenderAnnoucementTable step={step} send={send} />
   switch (step.name) {
     case STEP_ASK_NAME: return <AskName send={send} />;
     case STEP_ASK_PARTNER: return <AskPartner send={send} step={step} />;

@@ -28,12 +28,12 @@ export const RenderConnection = ({ serverInfo, setServerInfo }) => {
   }
 
   return (<Box>
-    <div><Button style={{minWidth: 150, fontSize: 24, backgroundColor: 'rgba(255, 255,255, .2)'}} onClick={startServer}>Start New Server</Button></div>
+    <div><Button yellow  onClick={startServer}>Start New Server</Button></div>
     <div>or</div>
     <div>
       <div>Connect to existing Server</div>
       <div><input style={{fontSize: 24}} type="text" placeholder="enter server id" ref={inputRef} /></div>
-      <div><Button onClick={onSubmitConnect} style={{minWidth: 150, fontSize: 24, backgroundColor: 'rgba(255, 255,255, .2)'}}>Connect</Button></div>
+      <div><Button yellow onClick={onSubmitConnect} >Connect</Button></div>
     </div>
   </Box>);
 };

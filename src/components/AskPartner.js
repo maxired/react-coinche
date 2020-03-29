@@ -1,5 +1,7 @@
 import React, { useCallback, useRef } from 'react';
 import { CLIENT_SET_PARTNER } from '../Constants';
+import { Box } from './Box';
+import { Button } from './Button';
 export const AskPartner = ({ send, step: { names = [] } }) => {
   const inputRef = useRef();
   const onSubmit = useCallback(() => {
@@ -12,12 +14,12 @@ export const AskPartner = ({ send, step: { names = [] } }) => {
       }
     });
   }, [send]);
-  return <div>
+  return <Box>
     <div>Who do you want to play with ?</div>
     <select ref={inputRef} name="pets" id="pet-select">
       <option value="">--Please choose a player--</option>
       {names.map(name => <option key={name} value={name}>{name}</option>)}
     </select>
-    <div><input type="submit" onClick={onSubmit} /></div>
-  </div>;
+    <div><Button yellow onClick={onSubmit}>Jouer</Button></div>
+  </Box>;
 };

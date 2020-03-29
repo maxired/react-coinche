@@ -26,8 +26,8 @@ export const AskName = ({ send }) => {
   }, [send]);
   return <Box>
     <div>We need you to enter a player name</div>
-    <div><input style={{fontSize: 24}} type="text" placeholder="Player Name" ref={inputRef} /></div>
-    <div><Button onClick={onSubmit} style={{minWidth: 150, fontSize: 24, backgroundColor: 'rgba(255, 255,255, .2)'}}>Set name</Button></div>
+    <div><input style={{fontSize: 24, margin: 8}} type="text" placeholder="Player Name" ref={inputRef} /></div>
+    <div><Button yellow onClick={onSubmit} >Set name</Button></div>
     </Box>;
 };
 

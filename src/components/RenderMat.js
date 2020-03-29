@@ -55,7 +55,7 @@ export const RenderMat = ({ cards, step, send }) => {
     <div style={computedPositionStyle({ step, position: 'E' })}>East - {step.positions.E}</div>
     <div style={computedPositionStyle({ step, position: 'W' })}>West - {step.positions.W}</div>
     {step.mat.length === 4 && <div style={{ position: 'absolute', bottom: 10, right: '30%' }}>
-      <Button onClick={getMat}>Ramasser</Button>
+      <Button yellow onClick={getMat}>Ramasser</Button>
     </div>}
   </div>);
 };
