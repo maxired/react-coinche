@@ -14,7 +14,7 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "deploy": "yarn build && cd build && now -S maxired --name belote",
+    "deploy": "yarn build && now -S maxired --name belote build/",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
