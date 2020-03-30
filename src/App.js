@@ -29,7 +29,7 @@ function App() {
  
   useEffect(() => {
     if(serverInfo.shortId){
-      const client = new Peer(undefined, { host: '9000-b5d669d5-042e-43c4-863d-e6a3f7621f2f.ws-eu01.gitpod.io', path: '/', secure: true}); 
+      const client = new Peer(undefined, { host: 'jitsi.retrolution.co', port:  9000, path: '/myapp', secure: false}); 
       client.on(ON_OPEN, function() {
         const con = client.connect(getServerFullId(serverInfo.shortId));
         con.on(ON_OPEN, () => {

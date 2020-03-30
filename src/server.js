@@ -214,7 +214,7 @@ const setAskPartnerIfNeeded = (res) => {
 const Server = (id, cb) => {
     const randomId = id || Math.floor(Math.random() * 10000)
     const peerServerId = getServerFullId(randomId)
-    const serverPeer = new Peer(peerServerId, { host: '9000-b5d669d5-042e-43c4-863d-e6a3f7621f2f.ws-eu01.gitpod.io', path: '/', secure: true} );
+    const serverPeer = new Peer(peerServerId, { host: 'jitsi.retrolution.co', port:  9000, path: '/myapp', secure: false} );
     
     serverPeer.on(ON_OPEN, function(id) {
       serverPeer.on(ON_CONNECTION, (p1_) => {
