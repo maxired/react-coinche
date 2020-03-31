@@ -30,13 +30,14 @@ const computedPositionStyle = ({ step, position }) => {
   const cardPosition = computeCardPosition({ step, card: { position } });
   return ({ ...defaultPosition, [oposite[cardPosition]]: null });
 };
+
 export const RenderMat = ({ cards, step, send }) => {
   const getMat = useCallback(() => {
     send({ type: CLIENT_GET_MAT });
   }, [send]);
   if (step.name !== STEP_WATCH_CARDS) return null
   
-  return (<div style={{ position: 'relative', backgroundColor: '#006D34', height: 500, maxHeight: '75vh'  }}>
+  return (<div style={{ position: 'relative', textAlign: 'center', backgroundColor: '#006D34', height: 500, maxHeight: '75vh'  }}>
     {step.mat.map(card => {
       const cardPosition = computeCardPosition({ step, card });
       return <img alt={card.full} key={card.full} src={`${card.full}.svg`} style={{
@@ -57,7 +58,30 @@ export const RenderMat = ({ cards, step, send }) => {
     {step.mat.length === 4 && <div style={{ position: 'absolute', bottom: 10, right: '30%' }}>
       <Button yellow onClick={getMat}>Ramasser</Button>
     </div>}
+    <TurnIndicator step={step} />
   </div>);
 };
+
+const TurnIndicator = ({ step }) => {
+  if(!step.turnPosition) return null
+
+  const indicatorPosition = computeCardPosition({ step, card: { position: step.turnPosition} });
+
+  return <div style={{
+    width: 20,
+    height: 20,
+    borderRadius: 20,
+    background: '#0E42D3',
+    borderWidth: 2,
+    borderColor: 'white',
+    borderStyle: 'dashed',
+    left: indicatorPosition === 'right' ? null : 125,
+    right: indicatorPosition === 'left' ? null : 125,
+    top: indicatorPosition === 'bottom' ? null : 30,
+    bottom: indicatorPosition === 'top' ? null : 50,
+    margin: 'auto',
+    position: 'absolute',
+    }}></div>
+}
 
 

@@ -299,6 +299,7 @@ function sendWatchCards() {
   Object.values(clients).forEach(({ connection, position, name }) => {
     setStep(connection, STEP_WATCH_CARDS, {
       isTurn: position === turnPosition,
+      turnPosition,
       position,
       mat: party.mat,
       announce: party.announce,
