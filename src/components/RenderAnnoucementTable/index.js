@@ -25,8 +25,12 @@ export const RenderAnnoucementTable = ({ send, step = {} }) => {
   }, [color])
 
   const envoyer = useCallback(() => {
-    if(!localCount || !(localCount>value) ){
-      alert('Vous devez monter ou passer')
+    if(!localCount || !(localCount>value)) {
+      alert('Vous devez monter ou passer');
+      return;
+    }
+    if(!localColor){
+      alert('Vous devez definir une couleur');
       return;
     }
     send({ 
