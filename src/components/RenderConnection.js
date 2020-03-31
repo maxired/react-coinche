@@ -24,7 +24,10 @@ export const RenderConnection = ({ serverInfo, setServerInfo }) => {
   }, [setServerInfo]);
   
   if (serverInfo.shortId) {
-    return <div style={{position: 'absolute', top: 10, left: 10, zIndex: 3}}>serverInfo ID {serverInfo.shortId}</div>;
+    return <div style={{position: 'absolute', top: 10, left: 10, zIndex: 3}}>
+      <div>serverInfo ID {serverInfo.shortId}</div>
+      <div>Share Url {`${document.location.protocol}//${document.location.host}?serverId=${serverInfo.shortId}`}</div>
+      </div>;
   }
 
   return (<Box>

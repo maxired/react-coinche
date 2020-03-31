@@ -2,8 +2,9 @@ import React, { useCallback } from 'react';
 import { STEP_WATCH_CARDS, CLIENT_GET_MAT } from '../Constants';
 import { Button } from './Button'
 import { PlayerPositions } from './PlayerPositions';
+import { TurnIndicator } from './TurnIndicator';
 
-const computeCardPosition = ({ step, card }) => {
+export const computeCardPosition = ({ step, card }) => {
   const orders = {
     N: { E: 'left', W: 'right', S: 'top', N: 'bottom' },
     S: { E: 'right', W: 'left', N: 'top', S: 'bottom' },
@@ -59,27 +60,5 @@ export const RenderMat = ({ cards, step, send }) => {
     <TurnIndicator step={step} />
   </div>);
 };
-
-const TurnIndicator = ({ step }) => {
-  if(!step.turnPosition) return null
-
-  const indicatorPosition = computeCardPosition({ step, card: { position: step.turnPosition} });
-
-  return <div style={{
-    width: 20,
-    height: 20,
-    borderRadius: 20,
-    background: '#0E42D3',
-    borderWidth: 2,
-    borderColor: 'white',
-    borderStyle: 'dashed',
-    left: indicatorPosition === 'right' ? null : 125,
-    right: indicatorPosition === 'left' ? null : 125,
-    top: indicatorPosition === 'bottom' ? null : 30,
-    bottom: indicatorPosition === 'top' ? null : 50,
-    margin: 'auto',
-    position: 'absolute',
-    }}></div>
-}
 
 

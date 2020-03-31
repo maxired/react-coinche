@@ -4,6 +4,7 @@ import { CLIENT_ANNOUNCE, CLIENT_VALIDATE_ANNOUNCE } from '../../Constants';
 import { Button } from '../Button';
 import { Box } from '../Box';
 import { PlayerPositions } from '../PlayerPositions';
+import { TurnIndicator } from '../TurnIndicator';
 
 const Label = ({ value, setValue, currentValue, children }) => {
   const onChange = useCallback((event) => setValue(value), [setValue, value])
@@ -80,6 +81,7 @@ export const RenderAnnoucementTable = ({ send, step = {} }) => {
     </div>
     </div>
     <PlayerPositions step={step} />
+    <TurnIndicator step={step} />
   </Box >;
 };
 
