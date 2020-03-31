@@ -114,7 +114,8 @@ const dealWithClientData = (res, clientData) => {
     party.announce = {
       color: '',
       count: 80,
-      player: ''
+      player: '',
+      valid: [],
     }
     distributeCard(cards, party)
   } else if (clientData.type === CLIENT_PLAY_CARD) {
@@ -159,7 +160,14 @@ const dealWithClientData = (res, clientData) => {
     valid.push(res.peer);
     party.announce.valid = valid;
     if(party.announce.valid.length ===4) {
-      sendWatchCards()
+      if(party.announce.player){
+        sendWatchCards()
+      } else {
+        // shuffle and resend card
+        party.announce.valid = [];
+        const cards = shuffle(createCards());
+        distributeCard(cards, party)
+      }
     } else {
       sendAnnounce(party)
     }
