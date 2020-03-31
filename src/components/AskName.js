@@ -3,6 +3,7 @@ import { CLIENT_SET_NAME } from '../Constants';
 import { qs } from '../App';
 import { Button } from './Button';
 import { Box } from './Box';
+import { addQueryParam } from '../utils';
 
 export const AskName = ({ send }) => {
   const inputRef = useRef();
@@ -13,6 +14,8 @@ export const AskName = ({ send }) => {
         name: inputRef.current.value
       }
     });
+
+    addQueryParam('name', inputRef.current.value)
   }, [send]);
   useEffect(() => {
     if (qs.name) {

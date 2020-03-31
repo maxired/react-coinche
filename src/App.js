@@ -11,6 +11,7 @@ import { RenderMat } from './components/RenderMat';
 import { RenderConnection } from './components/RenderConnection';
 import { RenderConnected } from './components/RenderConnected';
 import { RenderStep } from './components/RenderStep';
+import { addQueryParam } from './utils';
 
 
 export const qs = document.location.search ? document.location.search.slice(1).split('&').reduce((memo, v) => {
@@ -26,14 +27,16 @@ function App() {
   const [connected, setConnected] = useState([])
   const [currentStep, setStep] = useState({})
   const [cards, setCards] = useState([])
- 
   useEffect(() => {
     if(serverInfo.shortId){
-      const client = new Peer(undefined, { host: 'jitsi.retrolution.co', port:  9000, path: '/myapp', secure: true}); 
-      client.on(ON_OPEN, function() {
+      const client = new Peer(qs.peerId || undefined, { host: 'jitsi.retrolution.co', port:  9000, path: '/myapp', secure: true}); 
+      client.on(ON_OPEN, function(peerId) {
+        if(!qs.peerId){
+          addQueryParam('peerId', peerId)
+        }
         const con = client.connect(getServerFullId(serverInfo.shortId));
         con.on(ON_OPEN, () => {
-            setClientCon(con)
+          setClientCon(con)
         });
       })
     }
