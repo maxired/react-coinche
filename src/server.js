@@ -116,6 +116,7 @@ const dealWithClientData = (res, clientData) => {
       count: 80,
       player: '',
       valid: [],
+      history: [],
     }
     distributeCard(cards, party)
   } else if (clientData.type === CLIENT_PLAY_CARD) {
@@ -154,6 +155,10 @@ const dealWithClientData = (res, clientData) => {
     party.announce.value = value;
     party.announce.valid = [res.peer]
     party.announce.player = clients[res.peer].name
+    party.announce.history.push({
+      ...party.announce,
+      history: null
+    })
     sendAnnounce(party)
   } else if (clientData.type === CLIENT_VALIDATE_ANNOUNCE){
     const valid = party.announce.valid.filter(p => p !== res.peer)
@@ -164,6 +169,7 @@ const dealWithClientData = (res, clientData) => {
         sendWatchCards()
       } else {
         // shuffle and resend card
+        party.announce.valid = [];
         party.announce.valid = [];
         const cards = shuffle(createCards());
         distributeCard(cards, party)
@@ -182,7 +188,8 @@ const dealWithClientData = (res, clientData) => {
         color: '',
         count: 80,
         player: '',
-        valid: []
+        valid: [],
+        history: [],
       }
       // rassembler
       const stackedCards = [...party.stacks.NS, ...party.stacks.EW];
@@ -287,6 +294,7 @@ function sendAnnounce(party) {
   Object.values(clients).forEach(({ connection, position }) => {
     setStep(connection, STEP_ASK_ANNOUNCE, {
       isTurn: position === turnPosition,
+      turnPosition,
       position,
       mat: [],
       positions: {

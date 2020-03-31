@@ -33,7 +33,10 @@ export const WatchCards = ({ cards, step, setCards, send }) => {
         color: step.isTurn ? 'black' : 'black',
         fontWeight:   step.isTurn ? 'bold' : 'normal',
         }}>
-        {step.isTurn ? 'Your turn to play' : 'waiting for other to play'}     
+        {step.isTurn ?
+            'Your turn to play' :
+            `waiting for ${(step.positions && step.positions[step.turnPosition ]) || 'other'} to play`
+          }    
       </div>
       <span>Your position : {positionsNames[step.position]}</span>
       <span>-</span>

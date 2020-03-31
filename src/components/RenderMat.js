@@ -1,6 +1,7 @@
 import React, { useCallback } from 'react';
 import { STEP_WATCH_CARDS, CLIENT_GET_MAT } from '../Constants';
 import { Button } from './Button'
+import { PlayerPositions } from './PlayerPositions';
 
 const computeCardPosition = ({ step, card }) => {
   const orders = {
@@ -26,7 +27,7 @@ const oposite = {
   'right': 'left',
   'bottom': 'top'
 };
-const computedPositionStyle = ({ step, position }) => {
+export const computedPositionStyle = ({ step, position }) => {
   const cardPosition = computeCardPosition({ step, card: { position } });
   return ({ ...defaultPosition, [oposite[cardPosition]]: null });
 };
@@ -51,10 +52,7 @@ export const RenderMat = ({ cards, step, send }) => {
       }} />;
     })}
 
-    <div style={computedPositionStyle({ step, position: 'N' })}>North - {step.positions.N}</div>
-    <div style={computedPositionStyle({ step, position: 'S' })}>South - {step.positions.S}</div>
-    <div style={computedPositionStyle({ step, position: 'E' })}>East - {step.positions.E}</div>
-    <div style={computedPositionStyle({ step, position: 'W' })}>West - {step.positions.W}</div>
+    <PlayerPositions step={step} />
     {step.mat.length === 4 && <div style={{ position: 'absolute', bottom: 10, right: '30%' }}>
       <Button yellow onClick={getMat}>Ramasser</Button>
     </div>}

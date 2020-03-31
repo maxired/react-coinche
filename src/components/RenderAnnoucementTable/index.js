@@ -3,6 +3,7 @@ import styles from './styles.module.css'
 import { CLIENT_ANNOUNCE, CLIENT_VALIDATE_ANNOUNCE } from '../../Constants';
 import { Button } from '../Button';
 import { Box } from '../Box';
+import { PlayerPositions } from '../PlayerPositions';
 
 const Label = ({ value, setValue, currentValue, children }) => {
   const onChange = useCallback((event) => setValue(value), [setValue, value])
@@ -10,8 +11,8 @@ const Label = ({ value, setValue, currentValue, children }) => {
   return <label className={`${styles.label} ${isChecked && styles.checked}`}> <input checked={isChecked} type="radio" name="amount" value={value} onChange={onChange}></input>{children || value}</label>
 }
 
-export const RenderAnnoucementTable = ({ send, step: { announce: { value = 80, color = '', player= ''} = {}} = {} }) => {
-
+export const RenderAnnoucementTable = ({ send, step = {} }) => {
+  const { announce: { value = 80, color = '', player= ''} = {}} = step;
   const [localCount, setLocalCount] = useState(value);
   const [localColor, setLocalColor] = useState(color);
   useEffect(() => {
@@ -47,7 +48,7 @@ export const RenderAnnoucementTable = ({ send, step: { announce: { value = 80, c
   const passer = useCallback(() => {
     send({ type: CLIENT_VALIDATE_ANNOUNCE })
   }, [send])
-  return <Box className={styles.table}>
+  return <Box className={styles.table} style={{ position: 'relative'}}>
       <div  className={styles.section}>
       <div className={styles.labelLine}>
      <Label name="count" value={80} currentValue={localCount} setValue={setCount} />
@@ -78,6 +79,7 @@ export const RenderAnnoucementTable = ({ send, step: { announce: { value = 80, c
       <Button yellow onClick={passer}>PASSER</Button>
     </div>
     </div>
+    <PlayerPositions step={step} />
   </Box >;
 };
 
