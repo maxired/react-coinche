@@ -24,27 +24,19 @@ export const RenderAnnoucementTable = ({ send, step = {} }) => {
     setLocalColor(color)
   }, [color])
 
-  const setCount = useCallback((nextLocalValue) => {
-    setLocalCount(nextLocalValue)
+  const envoyer = useCallback(() => {
+    if(!localCount || !(localCount>value) ){
+      alert('Vous devez monter ou passer')
+      return;
+    }
     send({ 
       type: CLIENT_ANNOUNCE,
       announce: {
-        value: nextLocalValue,
-        color: color,
+        value: localCount,
+        color: localColor,
       }
-    })
-  }, [color, send])
-
-  const setColor = useCallback((nextLocalColor) => {
-    setLocalColor(nextLocalColor)
-    send({ 
-      type: CLIENT_ANNOUNCE,
-      announce: {
-        value: value,
-        color: nextLocalColor,
-      }
-    })
-  }, [send, value])
+    });
+  },[localCount, value, send, localColor])
 
   const passer = useCallback(() => {
     send({ type: CLIENT_VALIDATE_ANNOUNCE })
@@ -52,32 +44,33 @@ export const RenderAnnoucementTable = ({ send, step = {} }) => {
   return <Box className={styles.table} style={{ position: 'relative'}}>
       <div  className={styles.section}>
       <div className={styles.labelLine}>
-     <Label name="count" value={80} currentValue={localCount} setValue={setCount} />
-     <Label name="count" value={90} currentValue={localCount} setValue={setCount}/>
-     <Label name="count" value={100} currentValue={localCount} setValue={setCount}/>
+     <Label name="count" value={80} currentValue={localCount} setValue={setLocalCount} />
+     <Label name="count" value={90} currentValue={localCount} setValue={setLocalCount}/>
+     <Label name="count" value={100} currentValue={localCount} setValue={setLocalCount}/>
   </div>
     <div className={styles.labelLine}>
-    <Label name="count" value={110} currentValue={localCount} setValue={setCount}/>
-    <Label name="count" value={120} currentValue={localCount} setValue={setCount}/>
-    <Label name="count" value={130} currentValue={localCount} setValue={setCount}/>
+    <Label name="count" value={110} currentValue={localCount} setValue={setLocalCount}/>
+    <Label name="count" value={120} currentValue={localCount} setValue={setLocalCount}/>
+    <Label name="count" value={130} currentValue={localCount} setValue={setLocalCount}/>
     </div>
     <div className={styles.labelLine}>
-    <Label name="count" value={140} currentValue={localCount} setValue={setCount}/>
-    <Label name="count" value={150} currentValue={localCount} setValue={setCount}/>
-    <Label name="count" value={160} currentValue={localCount} setValue={setCount}/>
+    <Label name="count" value={140} currentValue={localCount} setValue={setLocalCount}/>
+    <Label name="count" value={150} currentValue={localCount} setValue={setLocalCount}/>
+    <Label name="count" value={160} currentValue={localCount} setValue={setLocalCount}/>
     </div>
     </div>
     <div className={styles.section}>
       <div className={styles.labelLine}>
-        <Label name="color" value={'hearts'} currentValue={localColor} setValue={setColor}><Suit color="red">️️♥️</Suit></Label>
-        <Label name="count" value={'clubs'} currentValue={localColor} setValue={setColor}><Suit color="black">♣</Suit></Label>
+        <Label name="color" value={'hearts'} currentValue={localColor} setValue={setLocalColor}><Suit color="red">️️♥️</Suit></Label>
+        <Label name="count" value={'clubs'} currentValue={localColor} setValue={setLocalColor}><Suit color="black">♣</Suit></Label>
       </div>  <div className={styles.labelLine}>
-        <Label name="count" value={'diamonds'} currentValue={localColor} setValue={setColor}><Suit color="red">♦️</Suit></Label>
-        <Label name="count" value={'spades'} currentValue={localColor} setValue={setColor}><Suit color="black">♠️</Suit></Label>
+        <Label name="count" value={'diamonds'} currentValue={localColor} setValue={setLocalColor}><Suit color="red">♦️</Suit></Label>
+        <Label name="count" value={'spades'} currentValue={localColor} setValue={setLocalColor}><Suit color="black">♠️</Suit></Label>
     </div>
     <div style={{paddingTop: 8}}>
       <div>{player && `Annonce de ${player}`}</div>
-      <Button yellow onClick={passer}>PASSER</Button>
+      <Button yellow onClick={envoyer}>Parler</Button><br />
+      <Button yellow onClick={passer}>Passer</Button>
     </div>
     </div>
     <PlayerPositions step={step} />
