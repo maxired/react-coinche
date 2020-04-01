@@ -25,7 +25,7 @@ export const RenderAnnoucementTable = ({ send, step = {} }) => {
   }, [color])
 
   const envoyer = useCallback(() => {
-    if(!localCount || !(localCount>value)) {
+    if(!localCount || (color && !(localCount>value))) {
       alert('Vous devez monter ou passer');
       return;
     }
@@ -40,7 +40,7 @@ export const RenderAnnoucementTable = ({ send, step = {} }) => {
         color: localColor,
       }
     });
-  },[localCount, value, send, localColor])
+  },[localCount, color, value, localColor, send])
 
   const passer = useCallback(() => {
     send({ type: CLIENT_VALIDATE_ANNOUNCE })
