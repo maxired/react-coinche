@@ -76,17 +76,21 @@ const setStep = (client, stateName, values) => {
 }
 
 const dealWithClientData = (res, clientData) => {
+
+  console.log('clientData', clientData.type, res.peer);
+
   if (clientData.type === GET_CLIENT) {
     res.send({
       type: SET_CLIENT,
       payload: Object.keys(clients)
     })
-
-    setStep(res, STEP_ASK_NAME)      
+// tocheck
+    setTimeout(()=> setStep(res, STEP_ASK_NAME)  , 1000)
+        
    } else if (clientData.type === CLIENT_SET_NAME) {
     clients[res.peer].name = clientData.payload.name;
    
-    if(!setAskPartnerIfNeeded(res)){
+    if(!setAskPartnerIfNeeded(res)) {
       setStep(res, STEP_WAITING)
     }
   } else if (clientData.type === CLIENT_SET_PARTNER) {
@@ -143,7 +147,7 @@ const dealWithClientData = (res, clientData) => {
         // 10 de der
         Object.keys(scoresNS).forEach(key => scoresNS[key] += 10 )
       } else {
-        Object.keys(scoresEW).forEach(key => scoresNS[key] += 10 )
+        Object.keys(scoresEW).forEach(key => scoresEW[key] += 10 )
       }
       party.scores.valid = []
       party.scores.NS += scoresNS[party.announce.color];
@@ -222,9 +226,9 @@ const getSplitIndex = () => {
 
 const setAskPartnerIfNeeded = (res) => {
   if(Object.values(clients).length === 4 && Object.values(clients).every(client => client.name)){
-    setStep(res, STEP_ASK_PARTNER, { names: 
+    setTimeout(() => setStep(res, STEP_ASK_PARTNER, { names: 
       Object.keys(clients).filter(key => key !== res.peer).map(key => clients[key].name)
-    })
+    }), 1000);
     return true
   }
   return false;
