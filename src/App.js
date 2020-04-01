@@ -28,8 +28,10 @@ function App() {
   const [currentStep, setStep] = useState({})
   const [cards, setCards] = useState([])
   useEffect(() => {
-    if(serverInfo.shortId){
-      addQueryParam(serverInfo.fullId ? 'setServerId' : 'serverId', serverInfo.shortId) 
+    if(serverInfo.shortId) {
+      if(!qs.serverId && !qs.setServerId){
+        addQueryParam(serverInfo.fullId ? 'setServerId' : 'serverId', serverInfo.shortId) 
+      }
       const client = new Peer(qs.peerId || undefined, { host: 'jitsi.retrolution.co', port:  9000, path: '/myapp', secure: true}); 
       client.on(ON_OPEN, function(peerId) {
         if(!qs.peerId){

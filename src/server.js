@@ -85,8 +85,10 @@ const dealWithClientData = (res, clientData) => {
     setStep(res, STEP_ASK_NAME)      
    } else if (clientData.type === CLIENT_SET_NAME) {
     clients[res.peer].name = clientData.payload.name;
-    setStep(res, STEP_WAITING)
-    setAskPartnerIfNeeded(res)
+   
+    if(!setAskPartnerIfNeeded(res)){
+      setStep(res, STEP_WAITING)
+    }
   } else if (clientData.type === CLIENT_SET_PARTNER) {
     Object.values(clients).forEach(client => {
       if (client.name === clientData.payload.name || client.connection === res) {
@@ -223,7 +225,9 @@ const setAskPartnerIfNeeded = (res) => {
     setStep(res, STEP_ASK_PARTNER, { names: 
       Object.keys(clients).filter(key => key !== res.peer).map(key => clients[key].name)
     })
+    return true
   }
+  return false;
 }
 
 const Server = (id, cb) => {
