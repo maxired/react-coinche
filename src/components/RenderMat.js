@@ -1,5 +1,5 @@
 import React, { useCallback } from 'react';
-import { STEP_WATCH_CARDS, CLIENT_GET_MAT } from '../Constants';
+import { STEP_WATCH_CARDS, CLIENT_GET_MAT, CLIENT_UNPLAY_CARD } from '../Constants';
 import { Button } from './Button'
 import { PlayerPositions } from './PlayerPositions';
 import { TurnIndicator } from './TurnIndicator';
@@ -33,15 +33,16 @@ export const computedPositionStyle = ({ step, position }) => {
   return ({ ...defaultPosition, [oposite[cardPosition]]: null });
 };
 
-export const RenderMat = ({ cards, step, send }) => {
+export const RenderMat = ({ cards, step, setCards, send }) => {
   const getMat = useCallback(() => {
     send({ type: CLIENT_GET_MAT });
   }, [send]);
   if (step.name !== STEP_WATCH_CARDS) return null
   
   return (<div style={{ position: 'relative', textAlign: 'center', backgroundColor: '#006D34', height: 500, maxHeight: '75vh'  }}>
-    {step.mat.map(card => {
+    {step.mat.map((card, cardIndex) => {
       const cardPosition = computeCardPosition({ step, card });
+
       return <img alt={card.full} key={card.full} src={`${card.full}.svg`} style={{
         position: 'absolute',
         left: cardPosition === 'left' ? -150 : 0,
@@ -50,7 +51,16 @@ export const RenderMat = ({ cards, step, send }) => {
         bottom: cardPosition === 'bottom' ? -150 : 0,
         margin: 'auto',
         maxHeight: '50%'
-      }} />;
+      }} onDoubleClick={() => {
+        debugger;
+        if(card.position === step.position && cardIndex === (step.mat.length -1 )){
+          setCards([...cards, card]);
+          send({
+            type: CLIENT_UNPLAY_CARD,
+            payload: card
+          });
+        }
+      }}/>;
     })}
 
     <PlayerPositions step={step} />

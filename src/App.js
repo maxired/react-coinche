@@ -75,7 +75,7 @@ function App() {
   return (
     <div className="App">
       <RenderConnection serverInfo={serverInfo} setServerInfo={setServerInfo} />
-      <RenderMat step={currentStep}  send={send} />
+      <RenderMat step={currentStep}  send={send} cards={cards} setCards={setCards} />
       <RenderStep step={currentStep} send={send} cards={cards} setCards={setCards} />
       <RenderConnected connected={connected} />   
     </div>

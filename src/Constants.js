@@ -18,6 +18,8 @@ export const STEP_ASK_ANNOUNCE = 'askAnnounce'
 export const CLIENT_SET_NAME = 'clientSetName'
 export const CLIENT_SET_PARTNER = 'clientSetPartner'
 export const CLIENT_PLAY_CARD = 'clientPlayCard'
+export const CLIENT_UNPLAY_CARD = 'clientUnplayCard'
+
 export const CLIENT_GET_MAT = 'clientgetMat'
 export const CLIENT_ANNOUNCE = 'clientAnnounce'
 export const CLIENT_VALIDATE_ANNOUNCE = 'clientValidateAnnounce'

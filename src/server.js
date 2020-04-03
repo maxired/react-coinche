@@ -1,7 +1,7 @@
 import Peer from 'peerjs';
 import shuffle from 'lodash/fp/shuffle'
 
-import { ON_OPEN, ON_DATA, ON_CONNECTION, PEER_SERVER_PREFIX, GET_CLIENT, SET_CLIENT, SET_STEP, STEP_ASK_NAME, CLIENT_SET_NAME, STEP_WAITING, STEP_ASK_PARTNER, CLIENT_SET_PARTNER, CLEAR_CARDS, ADD_CARDS, STEP_WATCH_CARDS, CLIENT_PLAY_CARD, CLIENT_GET_MAT, STEP_WATCH_SCORES, STEP_ASK_ANNOUNCE, CLIENT_ANNOUNCE, CLIENT_VALIDATE_ANNOUNCE, CLIENT_VALIDATE_SCORE } from './Constants';
+import { ON_OPEN, ON_DATA, ON_CONNECTION, PEER_SERVER_PREFIX, GET_CLIENT, SET_CLIENT, SET_STEP, STEP_ASK_NAME, CLIENT_SET_NAME, STEP_WAITING, STEP_ASK_PARTNER, CLIENT_SET_PARTNER, CLEAR_CARDS, ADD_CARDS, STEP_WATCH_CARDS, CLIENT_PLAY_CARD, CLIENT_GET_MAT, STEP_WATCH_SCORES, STEP_ASK_ANNOUNCE, CLIENT_ANNOUNCE, CLIENT_VALIDATE_ANNOUNCE, CLIENT_VALIDATE_SCORE, CLIENT_UNPLAY_CARD } from './Constants';
 
 export const getServerFullId = (shortId) => `${PEER_SERVER_PREFIX}-${shortId}`
 
@@ -131,7 +131,10 @@ const dealWithClientData = (res, clientData) => {
     })
  
     sendWatchCards();
-  } else if (clientData.type === CLIENT_GET_MAT) {
+  } else if (clientData.type === CLIENT_UNPLAY_CARD) {
+    party.mat.pop()
+    sendWatchCards();
+  }else if (clientData.type === CLIENT_GET_MAT) {
     const client = clients[res.peer];
     party.stacks[['N', 'S'].includes(client.position) ? 'NS' : 'EW'].push(...party.mat)
     party.mat = [];
